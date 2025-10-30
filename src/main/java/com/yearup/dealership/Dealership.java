@@ -112,6 +112,15 @@ public class Dealership {
         inventory.remove(vehicle);
     }
 
+    public Vehicle getVehicleByVin(int vin) {
+        Vehicle result = null;
+        for(Vehicle vehicle: inventory) {
+            if (vehicle.getVin() == vin)
+                result = vehicle;
+        }
+        return result;
+    }
+
     @Override
     public String toString() {
         return "Dealership: " + name + "|"+ address + "|" + phone;

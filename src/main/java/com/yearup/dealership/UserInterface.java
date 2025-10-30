@@ -26,7 +26,9 @@ public class UserInterface {
             System.out.println("7. Search by vehicle type");
             System.out.println("8. Add vehicle");
             System.out.println("9. Remove vehicle");
-            System.out.println("10. Exit");
+            System.out.println("10. Sale of vehicle");
+            System.out.println("11. Lease of vehicle");
+            System.out.println("12. Exit");
             System.out.println("*********************************");
             System.out.print("Enter your choice: ");
 
@@ -60,6 +62,12 @@ public class UserInterface {
                     break;
                 case 9:
                     processGetByRemoveVehicleRequest();
+                    break;
+                case 10:
+                    processSaleOfVehicleRequest();
+                    break;
+                case 11:
+                    processLeaseOfVehicleRequest();
                     break;
                 case 0:
                     System.out.println("Goodbye...see you again soon");
@@ -183,5 +191,23 @@ public class UserInterface {
         } else {
             System.out.println("Vin not found!");
         }
+    }
+
+    public void processSaleOfVehicleRequest() {
+        System.out.println("\n****** Sale Confirmation ******");
+        System.out.println("Enter vin: ");
+        String vin = myScanner.nextLine();
+        displayVehicles();
+
+        System.out.println("Would you like to finance?(Y/N): ");
+        String finance = myScanner.nextLine();
+
+        System.out.println("Enter email: ");
+        String email = myScanner.nextLine();
+
+    }
+
+    public void processLeaseOfVehicleRequest() {
+
     }
 }
