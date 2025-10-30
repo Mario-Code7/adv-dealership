@@ -2,17 +2,20 @@ package com.yearup.dealership;
 
 public class SalesContract extends Contract {
 
-    private double salesTaxAmount;
-    private double recordingFee;
-    private double fee;
-    private boolean isFinance;
+    private double salesTaxAmount = 0.05;
+    private double recordingFee = 100;
+    private double processingFee;
+    private boolean financeOption;
 
-    public SalesContract(String date, String customerName, String customerEmail, double salesTaxAmount, double recordingFee, double fee, boolean isFinance) {
-        super(date, customerName, customerEmail);
-        this.salesTaxAmount = salesTaxAmount;
-        this.recordingFee = recordingFee;
-        this.fee = fee;
-        this.isFinance = isFinance;
+    public SalesContract(String date, String customerName, String customerEmail, Vehicle vehicleSold, boolean financeOption) {
+        super(date, customerName, customerEmail, vehicleSold);
+        this.financeOption = financeOption;
+
+        if (vehicleSold.getPrice() < 10000) {
+            this.processingFee = 295;
+        } else {
+            this.processingFee = 495;
+        }
     }
 
     public double getSalesTaxAmount() {
@@ -31,29 +34,40 @@ public class SalesContract extends Contract {
         this.recordingFee = recordingFee;
     }
 
-    public double getFee() {
-        return fee;
+    public double getProcessingFee() {
+        return processingFee;
     }
 
-    public void setFee(double fee) {
-        this.fee = fee;
+    public void setProcessingFee(double processingFee) {
+        this.processingFee = processingFee;
     }
 
-    public boolean isFinance() {
-        return isFinance;
+    public boolean isFinanceOption() {
+        return financeOption;
     }
 
-    public void setFinance(boolean finance) {
-        isFinance = finance;
-    }
 
     @Override
     public double getTotalPrice() {
-        return 0;
+        double basePrice = getVehicleSold().getPrice();
+        double saleTax = basePrice * salesTaxAmount;
+        return basePrice + saleTax + recordingFee + processingFee;
     }
 
     @Override
     public double getMonthlyPayment() {
-        return 0;
+        double totalPrice = getTotalPrice();
+        double rate;
+        int months;
+
+        if (getVehicleSold().getPrice() >= 10000) {
+            rate = 0.425 / 12;
+            months = 48;
+        } else {
+            rate = 0.525 / 12;
+            months = 24;
+        }
+
+        return totalPrice * (rate * Math.pow(1 + rate, months)) / (Math.pow(1 + rate, months) - 1);
     }
 }

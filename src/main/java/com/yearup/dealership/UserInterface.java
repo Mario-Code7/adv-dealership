@@ -196,14 +196,15 @@ public class UserInterface {
     public void processSaleOfVehicleRequest() {
         System.out.println("\n****** Sale Confirmation ******");
         System.out.println("Enter vin: ");
-        String vin = myScanner.nextLine();
-        displayVehicles();
+        int vin = myScanner.nextInt();
 
         System.out.println("Would you like to finance?(Y/N): ");
         String finance = myScanner.nextLine();
 
         System.out.println("Enter email: ");
         String email = myScanner.nextLine();
+
+
 
     }
 
