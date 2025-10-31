@@ -196,6 +196,7 @@ public class UserInterface {
         if (toRemove != null) {
             dealership.removeVehicle(toRemove);
             saveDealership(dealership);
+
             System.out.println("Vehicle removed!");
         } else {
             System.out.println("Vin not found!");
@@ -265,6 +266,7 @@ public class UserInterface {
         LeaseContract contract = new LeaseContract(date, name, email, vehicle);
         contractDataManager.saveContract(contract);
         dealership.removeVehicle(vehicle);
+
         System.out.println("Vehicle has been leased!");
     }
     private void processAdminLogin() {
