@@ -3,6 +3,8 @@ package com.yearup.dealership;
 import java.util.List;
 import java.util.Scanner;
 
+import static com.yearup.dealership.DealershipFileManager.saveDealership;
+
 public class UserInterface {
     private final Scanner myScanner = new Scanner(System.in);
     private final Dealership dealership;
@@ -176,7 +178,7 @@ public class UserInterface {
         dealership.addVehicle(vehicle);
 
         DealershipFileManager dealershipFileManager = new DealershipFileManager();
-        dealershipFileManager.saveDealership(dealership);
+        saveDealership(dealership);
         System.out.println("Vehicle added!");
     }
 
@@ -191,6 +193,7 @@ public class UserInterface {
         }
         if (toRemove != null) {
             dealership.removeVehicle(toRemove);
+            saveDealership(dealership);
             System.out.println("Vehicle removed!");
         } else {
             System.out.println("Vin not found!");
@@ -204,7 +207,7 @@ public class UserInterface {
         int vin = myScanner.nextInt();
         myScanner.nextLine();
 
-        Vehicle vehicle = findVehicleByVin(vin);
+        Vehicle vehicle = dealership.getVehicleByVin(vin);
         if (vehicle == null) {
             System.out.println("Vehicle not found!");
             return;
@@ -225,15 +228,8 @@ public class UserInterface {
         SalesContract contract = new SalesContract(date, name, email, vehicle, finance);
         contractDataManager.saveContract(contract);
         dealership.removeVehicle(vehicle);
-    }
-
-    private Vehicle findVehicleByVin(int vin) {
-        for (Vehicle vehicle: dealership.getAllVehicles()) {
-            if (vehicle.getVin() == vin) {
-                return vehicle;
-            }
-        }
-        return null;
+        saveDealership(dealership);
+        System.out.println("Vehicle has been sold!");
     }
 
     private void processLeaseOfVehicleRequest() {
@@ -243,7 +239,7 @@ public class UserInterface {
         int vin = myScanner.nextInt();
         myScanner.nextLine();
 
-        Vehicle vehicle = findVehicleByVin(vin);
+        Vehicle vehicle = dealership.getVehicleByVin(vin);
         if (vehicle == null) {
             System.out.println("Vehicle not found!");
             return;
@@ -267,5 +263,6 @@ public class UserInterface {
         LeaseContract contract = new LeaseContract(date, name, email, vehicle);
         contractDataManager.saveContract(contract);
         dealership.removeVehicle(vehicle);
+        System.out.println("Vehicle has been leased!");
     }
 }

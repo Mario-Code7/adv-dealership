@@ -32,7 +32,7 @@ public class DealershipFileManager {
             return null;
         }
     }
-    public void saveDealership(Dealership dealership){
+    public static void saveDealership(Dealership dealership){
         try(PrintWriter printWriter = new PrintWriter(new FileWriter("inventory.csv"))) {
             printWriter.println(dealership.getName() + "|" + dealership.getAddress() + "|" + dealership.getPhone());
             for (Vehicle vehicle: dealership.getAllVehicles()) {

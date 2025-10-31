@@ -8,7 +8,7 @@ public class Program {
         if (dealership != null) {
             UserInterface ui = new UserInterface(dealership);
             ui.display();
-            dealershipFileManager.saveDealership(dealership);
+            DealershipFileManager.saveDealership(dealership);
         } else {
             System.out.println("Error! Sorry could not find file.");
         }

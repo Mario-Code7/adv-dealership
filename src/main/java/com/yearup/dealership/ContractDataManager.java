@@ -9,7 +9,7 @@ public class ContractDataManager {
                 Vehicle vehicle = contract.getVehicleSold();
 
             if (contract instanceof SalesContract sale) {
-                printWriter.printf("SALE | %s | %s | %s | %d | %d | %s | %s | %s | %s | %d | %.2f | %.2f | %.2f | %.2f | %.2f | %s | %.2f\n",
+                printWriter.printf("\nSALE|%s|%s|%s|%d|%d|%s|%s|%s|%s|%d|%.2f|%.2f|%.2f|%.2f|%.2f|%s|%.2f",
                         sale.getDate(),
                         sale.getCustomerName(),
                         sale.getCustomerEmail(),
@@ -24,7 +24,7 @@ public class ContractDataManager {
                         vehicle.getPrice() * 0.05, 100.0,
                         sale.getProcessingFee(), sale.getTotalPrice(), sale.isFinanceOption(), sale.getMonthlyPayment());
             } else if (contract instanceof LeaseContract lease) {
-                printWriter.printf("LEASE | %s | %s | %s | %d | %d | %s | %s | %s | %s | %d | %.2f | %.2f | %.2f | %.2f | %.2f%n\n",
+                printWriter.printf("\nLEASE|%s|%s|%s|%d|%d|%s|%s|%s|%s|%d|%.2f|%.2f|%.2f|%.2f|%.2f%n",
                         lease.getDate(),
                         lease.getCustomerName(),
                         lease.getCustomerEmail(),
