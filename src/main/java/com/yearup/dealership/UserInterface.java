@@ -30,7 +30,7 @@ public class UserInterface {
             System.out.println("8. Add vehicle");
             System.out.println("9. Remove vehicle");
             System.out.println("10. Sale of vehicle");
-            System.out.println("11. Lease of vehicle");
+            System.out.println("11. Lease of vehicle");;
             System.out.println("0. Exit");
             System.out.println("*********************************");
             System.out.print("Enter your choice: ");
@@ -72,6 +72,8 @@ public class UserInterface {
                 case 11:
                     processLeaseOfVehicleRequest();
                     break;
+                case 12:
+                    processAdminLogin();
                 case 0:
                     System.out.println("Goodbye...see you again soon");
                     break;
@@ -264,5 +266,17 @@ public class UserInterface {
         contractDataManager.saveContract(contract);
         dealership.removeVehicle(vehicle);
         System.out.println("Vehicle has been leased!");
+    }
+    private void processAdminLogin() {
+        System.out.print("Enter admin password: ");
+        String password = myScanner.nextLine();
+
+        if (password.equals("admin7171")) {
+            System.out.println("Clear! You may enter.");
+            AdminUserInterface adminHome = new AdminUserInterface();
+            adminHome.display();
+        } else {
+            System.out.println("Stop and walk away!");
+        }
     }
 }
