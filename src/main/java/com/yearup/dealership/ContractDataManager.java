@@ -45,6 +45,8 @@ public class ContractDataManager {
                         );
 
             }
+        } catch (IOException e) {
+            System.out.println("Error saving contract: " + e.getMessage());
         }
     }
 }

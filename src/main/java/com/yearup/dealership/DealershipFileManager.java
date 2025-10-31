@@ -1,7 +1,6 @@
 package com.yearup.dealership;
 
 import java.io.*;
-import java.util.Scanner;
 
 public class DealershipFileManager {
     public Dealership getDealership() {
@@ -34,7 +33,7 @@ public class DealershipFileManager {
         }
     }
     public void saveDealership(Dealership dealership){
-        try(PrintWriter printWriter = new PrintWriter(new FileWriter("inventory.csv"))) {
+        try(PrintWriter printWriter = new PrintWriter(new FileWriter("inventory.csv", true))) {
             printWriter.println(dealership.getName() + "|" + dealership.getAddress() + "|" + dealership.getPhone());
             for (Vehicle vehicle: dealership.getAllVehicles()) {
                 printWriter.println(vehicle.getVin() + "|" + vehicle.getYear() + "|" + vehicle.getMake() + "|" + vehicle.getModel() + "|" + vehicle.getVehicleType() + "|" + vehicle.getColor() + "|" + vehicle.getOdometer() + "|" + vehicle.getPrice());

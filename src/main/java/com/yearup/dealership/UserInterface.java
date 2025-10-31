@@ -5,7 +5,8 @@ import java.util.Scanner;
 
 public class UserInterface {
     private final Scanner myScanner = new Scanner(System.in);
-    private Dealership dealership;
+    private final Dealership dealership;
+    private final ContractDataManager contractDataManager = new ContractDataManager();
 
     public UserInterface(Dealership dealership) {
         this.dealership = dealership;
@@ -82,7 +83,7 @@ public class UserInterface {
 //        DealershipFileManager fileManager = new DealershipFileManager();
 //        this.dealership = fileManager.getDealership();
 //    }
-    private void displayVehicles(List<Vehicle> vehicles) {
+    public void displayVehicles(List<Vehicle> vehicles) {
         if (vehicles.isEmpty()) {
             System.out.println("No vehicles found.");
             return;
@@ -106,12 +107,12 @@ public class UserInterface {
 //                System.out.println(vehicle);
 //            }
     }
-    public void processGetByAllVehiclesRequest() {
+    private void processGetByAllVehiclesRequest() {
         List<Vehicle> byAllVehicles = dealership.getAllVehicles();
         displayVehicles(byAllVehicles);
     }
 
-    public void processGetByPriceRequest() {
+    private void processGetByPriceRequest() {
         System.out.println("Enter min price: ");
         double min = myScanner.nextDouble();
         System.out.println("Enter max price: ");
@@ -119,38 +120,38 @@ public class UserInterface {
         displayVehicles(dealership.getVehiclesByPrice(min, max));
     }
 
-    public void processGetByMakeModelRequest() {
+    private void processGetByMakeModelRequest() {
         System.out.println("Enter make: ");
         String make = myScanner.nextLine();
         System.out.println("Enter model: ");
         String model = myScanner.nextLine();
         displayVehicles(dealership.getVehiclesByMakeModel(make, model));
     }
-    public void processGetByYearRequest() {
+    private void processGetByYearRequest() {
         System.out.println("Enter min year: ");
         int min = myScanner.nextInt();
         System.out.println("Enter max year: ");
         int max = myScanner.nextInt();
         displayVehicles(dealership.getVehiclesByYear(min, max));
     }
-    public void processGetByColorRequest() {
+    private void processGetByColorRequest() {
         System.out.println("Enter color: ");
         String color = myScanner.nextLine();
         displayVehicles(dealership.getVehiclesByColor(color));
     }
-    public void processGetByMileageRequest() {
+    private void processGetByMileageRequest() {
         System.out.println("Enter min mileage: ");
         int min = myScanner.nextInt();
         System.out.println("Enter max mileage: ");
         int max = myScanner.nextInt();
         displayVehicles(dealership.getVehiclesByMileage(min, max));
     }
-    public void processGetByVehicleTypeRequest() {
+    private void processGetByVehicleTypeRequest() {
         System.out.println("Enter vehicle type(car, truck, etc.): ");
         String vehicleType = myScanner.nextLine();
         displayVehicles(dealership.getVehiclesByType(vehicleType));
     }
-    public void processGetByAddVehicleRequest() {
+    private void processGetByAddVehicleRequest() {
 
         System.out.println("Vin: ");
         int vin = myScanner.nextInt();
@@ -176,7 +177,7 @@ public class UserInterface {
         System.out.println("Vehicle added!");
     }
 
-    public void processGetByRemoveVehicleRequest(){
+    private void processGetByRemoveVehicleRequest(){
         System.out.println("Enter vin to remove: ");
         int vin = myScanner.nextInt();
         Vehicle toRemove = null;
@@ -193,22 +194,75 @@ public class UserInterface {
         }
     }
 
-    public void processSaleOfVehicleRequest() {
+    private void processSaleOfVehicleRequest() {
         System.out.println("\n****** Sale Confirmation ******");
+
         System.out.println("Enter vin: ");
         int vin = myScanner.nextInt();
+        myScanner.nextLine();
 
-        System.out.println("Would you like to finance?(Y/N): ");
-        String finance = myScanner.nextLine();
+        Vehicle vehicle = findVehicleByVin(vin);
+        if (vehicle == null) {
+            System.out.println("Vehicle not found!");
+            return;
+        }
+
+        System.out.println("Enter sale date(YYYYMMDD): ");
+        String date = myScanner.nextLine();
+
+        System.out.println("Enter name: ");
+        String name = myScanner.nextLine();
 
         System.out.println("Enter email: ");
         String email = myScanner.nextLine();
 
+        System.out.println("Would you like to finance?(Y/N): ");
+        boolean finance = myScanner.nextLine().equalsIgnoreCase("yes");
 
-
+        SalesContract contract = new SalesContract(date, name, email, vehicle, finance);
+        contractDataManager.saveContract(contract);
+        dealership.removeVehicle(vehicle);
     }
 
-    public void processLeaseOfVehicleRequest() {
+    private Vehicle findVehicleByVin(int vin) {
+        for (Vehicle vehicle: dealership.getAllVehicles()) {
+            if (vehicle.getVin() == vin) {
+                return vehicle;
+            }
+        }
+        return null;
+    }
 
+    private void processLeaseOfVehicleRequest() {
+        System.out.println("\n****** Lease Confirmation ******");
+
+        System.out.println("Enter vin: ");
+        int vin = myScanner.nextInt();
+        myScanner.nextLine();
+
+        Vehicle vehicle = findVehicleByVin(vin);
+        if (vehicle == null) {
+            System.out.println("Vehicle not found!");
+            return;
+        }
+
+        int currentYear = 2025;
+        if (currentYear - vehicle.getYear() > 3) {
+            System.out.println("Cannot lease vehicles over 3 years old!");
+            return;
+        }
+
+        System.out.println("Enter sale date(YYYYMMDD): ");
+        String date = myScanner.nextLine();
+
+        System.out.println("Enter name: ");
+        String name = myScanner.nextLine();
+
+        System.out.println("Enter email: ");
+        String email = myScanner.nextLine();
+
+        LeaseContract contract = new LeaseContract(date, name, email, vehicle);
+        contractDataManager.saveContract(contract);
+        dealership.removeVehicle(vehicle);
     }
 }

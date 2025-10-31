@@ -2,8 +2,8 @@ package com.yearup.dealership;
 
 public class SalesContract extends Contract {
 
-    private double salesTaxAmount = 0.05;
-    private double recordingFee = 100;
+    private static double salesTaxAmount = 0.05;
+    private static double recordingFee = 100;
     private double processingFee;
     private boolean financeOption;
 
