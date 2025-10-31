@@ -29,7 +29,7 @@ public class UserInterface {
             System.out.println("9. Remove vehicle");
             System.out.println("10. Sale of vehicle");
             System.out.println("11. Lease of vehicle");
-            System.out.println("12. Exit");
+            System.out.println("0. Exit");
             System.out.println("*********************************");
             System.out.print("Enter your choice: ");
 
@@ -174,6 +174,9 @@ public class UserInterface {
 
         Vehicle vehicle = new Vehicle(vin, year, make, model, vehicleType, color, odometer, price);
         dealership.addVehicle(vehicle);
+
+        DealershipFileManager dealershipFileManager = new DealershipFileManager();
+        dealershipFileManager.saveDealership(dealership);
         System.out.println("Vehicle added!");
     }
 

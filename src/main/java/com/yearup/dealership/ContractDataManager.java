@@ -1,17 +1,15 @@
 package com.yearup.dealership;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 
 public class ContractDataManager {
 
     public void saveContract(Contract contract) {
         try(PrintWriter printWriter = new PrintWriter(new FileWriter("contracts.csv", true))) {
-            Vehicle vehicle = contract.getVehicleSold();
+                Vehicle vehicle = contract.getVehicleSold();
 
             if (contract instanceof SalesContract sale) {
-                printWriter.printf("SALE | %s | %s | %s | %d | %d | %s | %s | %s | %s | %d | %.2f | %.2f | %.2f | %.2f | %.2f | %s | %.2f",
+                printWriter.printf("SALE | %s | %s | %s | %d | %d | %s | %s | %s | %s | %d | %.2f | %.2f | %.2f | %.2f | %.2f | %s | %.2f\n",
                         sale.getDate(),
                         sale.getCustomerName(),
                         sale.getCustomerEmail(),
@@ -26,7 +24,7 @@ public class ContractDataManager {
                         vehicle.getPrice() * 0.05, 100.0,
                         sale.getProcessingFee(), sale.getTotalPrice(), sale.isFinanceOption(), sale.getMonthlyPayment());
             } else if (contract instanceof LeaseContract lease) {
-                printWriter.printf("LEASE | %s | %s | %s | %d | %d | %s | %s | %s | %s | %d | %.2f | %.2f | %.2f | %.2f | %.2f%n",
+                printWriter.printf("LEASE | %s | %s | %s | %d | %d | %s | %s | %s | %s | %d | %.2f | %.2f | %.2f | %.2f | %.2f%n\n",
                         lease.getDate(),
                         lease.getCustomerName(),
                         lease.getCustomerEmail(),

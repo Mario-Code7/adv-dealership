@@ -33,7 +33,7 @@ public class DealershipFileManager {
         }
     }
     public void saveDealership(Dealership dealership){
-        try(PrintWriter printWriter = new PrintWriter(new FileWriter("inventory.csv", true))) {
+        try(PrintWriter printWriter = new PrintWriter(new FileWriter("inventory.csv"))) {
             printWriter.println(dealership.getName() + "|" + dealership.getAddress() + "|" + dealership.getPhone());
             for (Vehicle vehicle: dealership.getAllVehicles()) {
                 printWriter.println(vehicle.getVin() + "|" + vehicle.getYear() + "|" + vehicle.getMake() + "|" + vehicle.getModel() + "|" + vehicle.getVehicleType() + "|" + vehicle.getColor() + "|" + vehicle.getOdometer() + "|" + vehicle.getPrice());
